@@ -1,0 +1,86 @@
+
+<h1>Projeto Hipertrofia</h1>
+<p>Seu plano de treino e alimentação</p>
+
+<button onclick="mostrar('treinos')">Treinos</button>
+<button onclick="mostrar('dieta')">Dieta</button>
+<button onclick="mostrar('evolucao')">Evolução</button>
+
+<section id="treinos">
+  <h2>Segunda — Peito, ombro e tríceps</h2>
+  <p>Supino inclinado: 3 × 8–12</p>
+  <p>Supino máquina: 3 × 8–12</p>
+  <p>Crossover: 3 × 12–15</p>
+  <p>Desenvolvimento: 3 × 8–12</p>
+  <p>Elevação lateral: 3 × 12–20</p>
+  <p>Tríceps corda: 3 × 10–15</p>
+  <hr>
+  <h2>Terça — Costas e bíceps</h2>
+  <p>Puxada alta: 3 × 8–12</p>
+  <p>Remada baixa: 3 × 8–12</p>
+  <p>Remada unilateral: 3 × 10–12</p>
+  <p>Face pull: 2 × 12–15</p>
+  <p>Rosca direta: 3 × 8–12</p>
+  <p>Rosca martelo: 2 × 10–15</p>
+  <hr>
+  <h2>Quarta — Pernas</h2>
+  <p>Leg press: 4 × 10–12</p>
+  <p>Agachamento goblet: 3 × 10–12</p>
+  <p>Stiff: 3 × 8–12</p>
+  <p>Extensora: 3 × 12–15</p>
+  <p>Abdutora e adutora: 2 × 15–20</p>
+  <p>Panturrilha: 4 × 12–20</p>
+  <hr>
+  <h2>Quinta — Futebol</h2>
+  <p>Futebol por até 2 horas. Faça aquecimento e hidrate-se.</p>
+  <hr>
+  <h2>Sexta — Parte superior</h2>
+  <p>Supino máquina: 3 × 8–12</p>
+  <p>Crossover: 2 × 12–15</p>
+  <p>Remada baixa: 3 × 10–12</p>
+  <p>Elevação lateral: 3 × 15–20</p>
+  <p>Rosca bíceps: 2 × 10–12</p>
+  <p>Tríceps corda: 2 × 10–15</p>
+  <hr>
+  <h2>Sábado e domingo</h2>
+  <p>Recuperação e descanso.</p>
+</section>
+
+<section id="dieta" hidden>
+  <h2>Sua alimentação</h2>
+  <p><b>10h — Pré-treino:</b> pão francês, uma colher de pasta de amendoim e uma colher de mel.</p>
+  <p><b>11h — Treino:</b> água durante o exercício.</p>
+  <p><b>12h — Almoço:</b> arroz, feijão e 180–200 g de frango, carne ou peixe.</p>
+  <p><b>15h30 — Lanche:</b> pão com ovos ou iogurte com aveia e fruta.</p>
+  <p><b>19h — Jantar:</b> arroz ou batata, proteína e vegetais.</p>
+  <p><b>22h30 — Ceia:</b> leite ou iogurte com fruta e aveia.</p>
+</section>
+
+<section id="evolucao" hidden>
+  <h2>Registrar seu peso</h2>
+  <input id="peso" type="number" placeholder="Peso em kg">
+  <button onclick="salvar()">Salvar peso</button>
+  <div id="historico"></div>
+</section>
+
+<script>
+function mostrar(id) {
+  document.querySelectorAll("section").forEach(s => s.hidden = s.id !== id);
+}
+function salvar() {
+  const peso = document.getElementById("peso").value;
+  if (!peso) return alert("Digite seu peso.");
+  const lista = JSON.parse(localStorage.getItem("pesos") || "[]");
+  lista.push({peso, data: new Date().toLocaleDateString("pt-BR")});
+  localStorage.setItem("pesos", JSON.stringify(lista));
+  carregar();
+}
+function carregar() {
+  const lista = JSON.parse(localStorage.getItem("pesos") || "[]");
+  document.getElementById("historico").innerHTML = lista.map(x =>
+    `<p>${x.data}: ${x.peso} kg</p>`
+  ).join("");
+}
+carregar();
+</script>
+
